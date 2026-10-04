@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: int_patient_history
+    columns:
+      - name: patient_id
+        tests:
+          - unique
+          - not_null
+  - name: int_doctor_performance
+    columns:
+      - name: doctor_id
+        tests:
+          - not_null
+          - unique
+  - name: int_hospital_performance
+    columns:
+      - name: hospital_id
+        tests:
+          - unique
+          - not_null
+  - name: int_active_insurance
+    columns:
+      - name: insurance_id
+        tests:
+          - unique
+          - not_null

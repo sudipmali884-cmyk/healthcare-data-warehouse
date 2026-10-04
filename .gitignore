@@ -1,0 +1,59 @@
+# ==========================================
+# Files/Folders NOT to upload to GitHub
+# ==========================================
+
+# PyCharm
+.idea/
+
+# Python virtual environment
+
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# Generated healthcare CSV data
+csv/
+
+# Power BI PBIX files
+dashboard/
+*.pbix
+*.pbit
+
+# Power BI temporary files
+~$*.pbix
+
+# dbt generated files
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+target/
+dbt_packages/
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment / credentials
+.env
+profiles.yml
+*.pem
+*.key
+
+
+# Snowflake credentials
+secrets/
+credentials/
+
+# Log files
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store

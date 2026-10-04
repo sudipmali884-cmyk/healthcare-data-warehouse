@@ -1,0 +1,249 @@
+version: 2
+sources:
+  - name: raw
+    database: healthcare_db
+    schema: raw
+    tables:
+      - name: hospitals
+      - name: doctors
+      - name: patients
+      - name: appointments
+      - name: insurance
+      - name: prescriptions
+models:
+  - name: stg_hospitals
+    #    description: clean customers data
+    #
+    columns:
+    - name: hospital_id
+      tests:
+        - unique
+        - not_null
+
+    - name: hospital_name
+      tests:
+        - not_null
+    - name: hospital_type
+      tests:
+          - accepted_values:
+              values:
+                - Private
+                - Government
+                - Trust
+                - Charitable
+    - name: state
+      tests:
+        - not_null
+    - name: bed_count
+      tests:
+        - not_null
+    - name: created_date
+
+      tests:
+        - not_null
+    - name: updated_date
+      tests:
+        - not_null
+
+  - name: stg_doctors
+    columns:
+    - name: doctor_id
+      tests:
+        - unique
+        - not_null
+    - name: hospital_id
+      tests:
+        - not_null
+        - relationships:
+            to: ref('stg_hospitals')
+            field: hospital_id
+    - name: doctor_name
+      tests:
+        - not_null
+    - name: gender
+      tests:
+        - accepted_values:
+            values:
+              - Male
+              - Female
+    - name: joining_date
+      tests:
+        - not_null
+    - name: consultation_fee
+      tests:
+        - not_null
+
+  - name: stg_patients
+    columns:
+      - name: patient_id
+        tests:
+          - unique
+          - not_null
+      - name: patient_name
+        tests:
+          - not_null
+      - name: blood_group
+        tests:
+          - accepted_values:
+              values:
+                - A+
+                - A-
+                - B+
+                - B-
+                - AB+
+                - AB-
+                - O+
+                - O-
+      - name: dob
+        tests:
+          - not_null
+
+  - name: stg_appointments
+    columns:
+      - name: appointment_id
+        tests:
+          - unique
+          - not_null
+      - name: patient_id
+        tests:
+#          - not_null
+          - relationships:
+              to: ref('stg_patients')
+              field: patient_id
+      - name: doctor_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_doctors')
+              field: doctor_id
+      - name: hospital_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_hospitals')
+              field: hospital_id
+      - name: appointment_status
+        tests:
+          - accepted_values:
+              values:
+                - Completed
+                - Pending
+                - Cancelled
+                - No Show
+      - name: consultation_type
+        tests:
+          - accepted_values:
+              values:
+                - Walk-In
+                - Online
+                - Emergency
+                - Follow-Up
+  - name: stg_insurance
+    columns:
+      - name: insurance_id
+        tests:
+          - unique
+          - not_null
+      - name: patient_id
+        relationships:
+          to: ref('stg_patients')
+          field: patient_id
+
+      - name: provider
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Star Health
+                - HDFC ERGO
+                - ICICI Lombard
+                - Niva Bupa
+                - Care Health
+                - Bajaj Allianz
+                - New India Assurance
+                - Aditya Birla Health
+                - Reliance General
+                - SBI General
+                - LIC
+                - IPPB
+      - name: policy_number
+        tests:
+#          - unique
+          - not_null
+      - name: coverage_amount
+        tests:
+          - not_null
+
+      - name: start_date
+        tests:
+          - not_null
+
+      - name: end_date
+        tests:
+          - not_null
+  - name: stg_prescriptions
+    columns:
+      - name: prescription_id
+        tests:
+          - unique
+          - not_null
+      - name: appointment_id
+        tests:
+#          - not_null
+          - relationships:
+              to: ref('stg_appointments')
+              field: appointment_id
+
+      - name: patient_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_patients')
+              field: patient_id
+      - name: doctor_id
+        tests:
+#          - not_null
+          - relationships:
+              to: ref('stg_doctors')
+              field: doctor_id
+      - name: medicine_name
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Paracetamol
+                - Azithromycin
+                - Amoxicillin
+                - Crocin
+                - Dolo 650
+                - Pantoprazole
+                - Cetirizine
+                - Metformin
+                - Amlodipine
+                - Atorvastatin
+                - Insulin
+                - Vitamin D3
+                - ORS
+                - Ibuprofen
+                - Diclofenac
+                - Omeprazole
+                - Levocetirizine
+                - Losartan
+                - Aspirin
+                - Monte LC
+                - No Tablet
+
+      - name: quantity
+        tests:
+          - not_null
+
+      - name: duration_days
+        tests:
+          - not_null
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+version: 2
+
+models:
+
+  - name: dim_patients
+
+    columns:
+
+      - name: patient_id
+
+        tests:
+
+          - unique
+
+          - not_null
+
+  - name: dim_date
+
+    columns:
+
+      - name: date_key
+
+        tests:
+
+          - unique
+
+          - not_null
+  - name: appointment_date_key
+
+    tests:
+
+      - relationships:
+
+          to: ref('dim_date')
+
+          field: date_key
+
+
+  - name: prescription_date_key
+
+    tests:
+
+      - relationships:
+
+          to: ref('dim_date')
+
+          field: date_key
+  - name: start_date_key
+
+    tests:
+
+      - relationships:
+
+          to: ref('dim_date')
+
+          field: date_key
+
+  - name: end_date_key
+
+    tests:
+
+      - relationships:
+
+          to: ref('dim_date')
+
+          field: date_key
