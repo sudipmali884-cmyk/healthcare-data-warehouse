@@ -18,7 +18,7 @@ Python ↓ CSV Files ↓ Snowflake RAW ↓ dbt STAGING ↓ dbt INTERMEDIATE ↓ 
 - DAX
 - Git
 - GitHub
-- Azure
+
 
 ## 📊 Data Warehouse
 
